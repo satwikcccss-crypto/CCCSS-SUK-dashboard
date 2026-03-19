@@ -138,7 +138,7 @@ setInterval(drawWM, 8000);
 
 /* CSS Injection Protection */
 const secStyle = document.createElement('style');
-secStyle.textContent = `*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}img,canvas{pointer-events:none!important;-webkit-user-drag:none!important}`;
+secStyle.textContent = `*{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}img,canvas#wm-canvas{pointer-events:none!important;-webkit-user-drag:none!important}`;
 document.head.appendChild(secStyle);
 
 const secObserver = new MutationObserver((mutations) => {
