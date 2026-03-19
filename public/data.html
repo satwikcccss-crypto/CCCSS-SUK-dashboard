@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Data | CCCSS Kolhapur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/charts.js"></script>
+
+    <style>
+        .ch-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow-sm); }
+        .ch-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--forest); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.3rem; }
+        .ch-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dark); margin-bottom: 1.5rem; }
+        .ch-wrap { position: relative; height: 260px; width: 100%; }
+        
+        .dt-wrap { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; box-shadow: var(--shadow-sm); margin-top: 1rem; }
+        table.dt { width: 100%; border-collapse: collapse; min-width: 650px; text-align: left; }
+        .dt th { background: var(--surface); padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); border-bottom: 2px solid var(--border); white-space: nowrap; }
+        .dt td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-light); font-size: 0.85rem; color: var(--text-body); }
+        .dt tbody tr:hover td { background: var(--forest-pale); }
+        .dt tbody tr:last-child td { border-bottom: none; }
+        
+        .data-header-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+
+        .nav-icon { width: 1.1em; height: 1.1em; fill: currentColor; transform: translateY(2px); margin-right: 4px; }
+        .logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+    </style>
+</head>
+<body>
+    <div id="sec-overlay">
+        <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--fire)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <h2>Content Protected</h2><p>Session: <span id="sid-disp">—</span></p>
+    </div>
+    <div id="watermark"><canvas id="wm-canvas"></canvas></div>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="images/suk_logo.png" alt="SUK Logo" class="logo-img">
+                <div class="logo-text">
+                    <div class="uni">Shivaji University, Kolhapur · Est. 2021</div>
+                    <div class="institute">Centre for Climate Change &amp; Sustainability Studies</div>
+                </div>
+            </div>
+            <div style="font-family:'DM Mono', monospace; font-size:0.75rem; color:var(--text-muted);" id="hdr-date">—</div>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
+            </a>
+            <a href="institution.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> About CCCSS
+            </a>
+            <a href="projects.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Project Dashboards
+            </a>
+            <a href="map-viewer.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg> Interactive Map
+            </a>
+            <a href="research.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Research
+            </a>
+            <a href="data.html" class="active">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> Climate Data
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--forest); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">Analytical Dashboard</div>
+            <h2 class="page-title">Climate Data & Anomalies</h2>
+            <div style="width:60px; height:3px; background:var(--forest); margin:0 auto 1.5rem;"></div>
+            <p class="page-subtitle">Long-term meteorological observations, standardized hazard indicators, and vulnerability metrics for the districts of Maharashtra.</p>
+        </div>
+
+        <div class="data-header-grid">
+            <div class="ch-card fi">
+                <div class="ch-label">Temperature</div>
+                <h3 class="ch-title">Annual Mean Temp. Anomaly (°C)</h3>
+                <div class="ch-wrap"><canvas id="ch-temp"></canvas></div>
+                <div style="font-size:0.75rem; color:var(--text-light); margin-top:1rem; text-align:center;">Base Period: 1951-1980 | Source: IMD, Pune</div>
+            </div>
+
+            <div class="ch-card fi">
+                <div class="ch-label">Precipitation</div>
+                <h3 class="ch-title">Monthly Rainfall Departure (2024)</h3>
+                <div class="ch-wrap"><canvas id="ch-rain"></canvas></div>
+                <div style="font-size:0.75rem; color:var(--text-light); margin-top:1rem; text-align:center;">Deviation from Long Period Average (LPA)</div>
+            </div>
+        </div>
+
+        <div class="ch-card fi" style="margin-bottom: 3rem;">
+            <div class="ch-label">Vulnerability Index (CVI)</div>
+            <h3 class="ch-title">Climate Vulnerability by District</h3>
+            <div class="ch-wrap" style="height:350px;"><canvas id="ch-vuln"></canvas></div>
+            <div style="font-size:0.75rem; color:var(--text-light); margin-top:1rem; text-align:center;">Calculated using exposure, sensitivity, and adaptive capacity indicators at district level.</div>
+        </div>
+
+        <div class="fi">
+            <h3 style="font-family:var(--font-display); font-size:1.6rem; color:var(--forest); margin-bottom:0.5rem;">District Hazard Profiles</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.5rem;">Aggregated climate parameters and susceptibility ratings for key monitoring stations (2023-24).</p>
+            <div class="dt-wrap">
+                <table class="dt">
+                    <thead>
+                        <tr>
+                            <th>District</th>
+                            <th>Avg Temp (°C)</th>
+                            <th>Ann. Rain (mm)</th>
+                            <th>Flood Risk</th>
+                            <th>Landslide Risk</th>
+                            <th>Fire Risk</th>
+                            <th>Drought Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dtbody">
+                        <!-- Populated by charts.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <img src="images/suk_logo.png" alt="SUK Logo" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border);">
+            <div class="footer-copy">
+                <strong>CCCSS · Shivaji University, Kolhapur</strong><br>
+                GIS Dashboard v2.0 · Est. October 2021<br>
+                © Centre for Climate Change &amp; Sustainability Studies. All IP rights reserved.
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="institution.html">Contact Us</a>
+            <a href="projects.html">Projects</a>
+            <a href="map-viewer.html">Map Explorer</a>
+        </div>
+    </footer>
+</body>
+</html>

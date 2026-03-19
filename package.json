@@ -1,0 +1,19 @@
+{
+  "name": "cccss-gis-dashboard",
+  "version": "1.0.0",
+  "description": "CCCSS Kolhapur — Climate Change & Sustainability Studies GIS Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "author": "Centre for Climate Change and Sustainability Studies, Shivaji University, Kolhapur",
+  "license": "CC-BY-NC-ND-4.0",
+  "dependencies": {
+    "express": "^4.21.0",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.4.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5"
+  }
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <title>Home | CCCSS Kolhapur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/security.js"></script>
+
+    <style>
+        .svg-icon { width: 1.25em; height: 1.25em; fill: currentColor; }
+        .nav-icon { width: 1.1em; height: 1.1em; fill: currentColor; transform: translateY(2px); margin-right: 4px; }
+        .logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+        .hero-svg { width: 48px; height: 48px; position: absolute; opacity: 0.15; fill: white; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <noscript>
+        <div style="position:fixed;inset:0;z-index:99999;background:#faf9f6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
+            <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--fire)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            <h2 style="color:#c0392b;font-family:sans-serif;margin-top:1rem;">JavaScript Required</h2>
+            <p style="color:#7a7268;font-family:sans-serif;">Please enable JavaScript to access the CCCSS Dashboard.</p>
+        </div>
+    </noscript>
+
+    <div id="terms-modal" class="terms-modal" style="display:none">
+        <div class="terms-box">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="var(--forest)" style="margin-bottom:1rem;"><path d="M12 2L2 22h20L12 2zm0 3.8l7.5 14H4.5L12 5.8zM11 10v5h2v-5h-2zm0 7v2h2v-2h-2z"/></svg>
+            <h2>Terms of Use</h2>
+            <p>Welcome to the CCCSS GIS Dashboard. By proceeding, you acknowledge that all content, maps, data, and visualizations are the intellectual property of the <strong>Centre for Climate Change and Sustainability Studies, Shivaji University, Kolhapur</strong>.</p>
+            <div class="ip-notice">
+                <strong>IP RIGHTS NOTICE:</strong><br>
+                • All maps, layers, and data are © CCCSS, Shivaji University.<br>
+                • Unauthorized reproduction or screenshots strictly prohibited.<br>
+                • Protected under the Copyright Act, 1957 (India).
+            </div>
+            <button class="btn btn-primary" onclick="acceptTerms()">I Accept — Enter Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Security overlay -->
+    <div id="sec-overlay">
+        <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--fire)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <h2>Content Protected</h2>
+        <p>Session: <span id="sid-disp">—</span> &nbsp;|&nbsp; All access is logged.</p>
+    </div>
+
+    <!-- Invisible watermark -->
+    <div id="watermark"><canvas id="wm-canvas"></canvas></div>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="images/suk_logo.png" alt="SUK Logo" class="logo-img">
+                <div class="logo-text">
+                    <div class="uni">Shivaji University, Kolhapur · Est. 2021</div>
+                    <div class="institute">Centre for Climate Change &amp; Sustainability Studies</div>
+                </div>
+            </div>
+            <div style="font-family:'DM Mono', monospace; font-size:0.75rem; color:var(--text-muted);" id="hdr-date">—</div>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html" class="active">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
+            </a>
+            <a href="institution.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> About CCCSS
+            </a>
+            <a href="projects.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Project Dashboards
+            </a>
+            <a href="map-viewer.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg> Interactive Map
+            </a>
+            <a href="research.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Research
+            </a>
+            <a href="data.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> Climate Data
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section style="background:linear-gradient(160deg, var(--forest) 0%, #12382a 55%, #1a3a52 100%); color:white; padding: 5rem 2rem; position:relative; overflow:hidden;">
+            <div style="position:absolute; inset:0; opacity:0.04; background-image:url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            
+            <svg class="hero-svg" viewBox="0 0 24 24" style="top:15%; left:10%;"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+            <svg class="hero-svg" viewBox="0 0 24 24" style="bottom:15%; right:10%; width:80px; height:80px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+
+            <div style="max-width:800px; margin:0 auto; position:relative; z-index:2; text-align:center;">
+                <div style="font-family:var(--font-mono); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.18em; color:rgba(255,255,255,0.7); margin-bottom:1.5rem;">GIS & Climate Research Platform</div>
+                <h1 style="font-family:var(--font-display); font-size:3.5rem; font-weight:700; line-height:1.15; margin-bottom:1.5rem;">Understanding <em style="color:#a8d5b8;font-style:italic;">Climate Change</em><br>Through Geospatial Science</h1>
+                <p style="font-size:1.1rem; color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:2.5rem;">A pioneering transdisciplinary hub for climate research, hazard mapping, and environmental knowledge exchange — focusing on the southwestern region of Maharashtra.</p>
+                
+                <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                    <a href="projects.html" class="btn btn-primary" style="background:white;color:var(--forest);">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> View Project Dashboards
+                    </a>
+                    <a href="map-viewer.html" class="btn" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3);">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg> Explore Interactive Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats strip -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); background:white; border-bottom:1px solid var(--border);">
+            <div style="padding:2rem; text-align:center; border-right:1px solid var(--border);">
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Temp. Anomaly Trend</div>
+                <div style="font-family:var(--font-display); font-size:2.5rem; font-weight:700; color:var(--text-dark); line-height:1;">+1.2<sub style="font-size:1rem;font-weight:400;color:var(--text-muted);">°C</sub></div>
+                <div style="font-size:0.8rem; color:var(--fire); margin-top:0.5rem;">↑ Since 1980</div>
+            </div>
+            <div style="padding:2rem; text-align:center; border-right:1px solid var(--border);">
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Districts Monitored</div>
+                <div style="font-family:var(--font-display); font-size:2.5rem; font-weight:700; color:var(--text-dark); line-height:1;">36</div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">Maharashtra State</div>
+            </div>
+            <div style="padding:2rem; text-align:center; border-right:1px solid var(--border);">
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Publications</div>
+                <div style="font-family:var(--font-display); font-size:2.5rem; font-weight:700; color:var(--text-dark); line-height:1;">147</div>
+                <div style="font-size:0.8rem; color:var(--forest); margin-top:0.5rem;">Research Articles & Reports</div>
+            </div>
+            <div style="padding:2rem; text-align:center;">
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Flood Risk Area</div>
+                <div style="font-family:var(--font-display); font-size:2.5rem; font-weight:700; color:var(--text-dark); line-height:1;">84k<sub style="font-size:1rem;font-weight:400;color:var(--text-muted);">ha</sub></div>
+                <div style="font-size:0.8rem; color:var(--fire); margin-top:0.5rem;">↑ Mapped 2024</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="page-header">
+                <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--forest); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">Core Setup</div>
+                <h2 class="page-title">Dashboard Overview</h2>
+                <div style="width:60px; height:3px; background:var(--forest); margin:0 auto;"></div>
+            </div>
+
+            <div class="grid-3">
+                <div class="card fi">
+                    <div class="card-icon" style="background:#e8efea;color:#1e4d3a;">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-8.5-9L2 6v2h19V6l-9.5-5z"/></svg>
+                    </div>
+                    <h3 class="card-title">The Institution</h3>
+                    <p class="card-text">Learn about the CCCSS mission, transdisciplinary core team, and our advisory committee composed of renowned climate scientists and professors.</p>
+                    <a href="institution.html" class="btn btn-outline" style="margin-top:1.5rem; padding:0.5rem 1rem; font-size:0.8rem;">Read More &rarr;</a>
+                </div>
+
+                <div class="card fi">
+                    <div class="card-icon" style="background:#e3f2fd;color:#1565c0;">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3 class="card-title">Project Dashboards</h3>
+                    <p class="card-text">View ArcGIS and Python-based operational project maps from our recent modeling initiatives including the Panchganga Basin Flood Monitoring project.</p>
+                    <a href="projects.html" class="btn btn-outline" style="margin-top:1.5rem; padding:0.5rem 1rem; font-size:0.8rem;">Open Projects &rarr;</a>
+                </div>
+
+                <div class="card fi">
+                    <div class="card-icon" style="background:#fce4e4;color:#c0392b;">
+                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    </div>
+                    <h3 class="card-title">Map Viewer</h3>
+                    <p class="card-text">Access our interactive GIS portal featuring high-resolution satellite basemaps and interactive layers for regional climate mapping.</p>
+                    <a href="map-viewer.html" class="btn btn-outline" style="margin-top:1.5rem; padding:0.5rem 1rem; font-size:0.8rem;">Open Map &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <img src="images/suk_logo.png" alt="SUK Logo" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border);">
+            <div class="footer-copy">
+                <strong>CCCSS · Shivaji University, Kolhapur</strong><br>
+                GIS Dashboard v2.0 · Est. October 2021<br>
+                © Centre for Climate Change &amp; Sustainability Studies. All IP rights reserved.
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="institution.html">Contact Us</a>
+            <a href="projects.html">Projects</a>
+            <a href="map-viewer.html">Map Explorer</a>
+        </div>
+    </footer>
+
+</body>
+</html>

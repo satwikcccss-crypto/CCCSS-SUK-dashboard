@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institution | CCCSS Kolhapur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/security.js"></script>
+    <style>
+        .mission-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-body); max-width: 800px; margin: 0 auto; text-align: center; }
+        .contact-box { background: var(--forest-pale); padding: 2.5rem; border-radius: var(--radius); border: 1px solid var(--border-light); }
+        .c-line { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+        .c-icon { width: 1.5rem; height: 1.5rem; fill: var(--forest); flex-shrink: 0; }
+        
+        /* Enhanced Faculty Grid */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .team-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; display: flex; flex-direction: column; height: 100%; position: relative; overflow: hidden; }
+        .team-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--forest), var(--river)); opacity: 0; transition: opacity 0.3s; }
+        .team-card:hover { transform: translateY(-6px); border-color: var(--border); box-shadow: var(--shadow-lg); }
+        .team-card:hover::before { opacity: 1; }
+        
+        .t-av { width: 80px; height: 80px; border-radius: 50%; background: var(--surface-2); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; fill: var(--text-light); border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; }
+        .t-av-img { width: 100%; height: 100%; object-fit: cover; }
+        .t-name { font-weight: 700; color: var(--text-dark); margin-bottom: 0.4rem; font-family: var(--font-display); font-size: 1.2rem; }
+        .t-qual { font-family: var(--font-mono); font-size: 0.75rem; color: var(--forest); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+        .t-role { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 1rem; flex-grow: 1; }
+        .t-spec { background: var(--forest-pale); color: var(--forest); font-size: 0.75rem; padding: 0.4rem 0.8rem; border-radius: 20px; font-weight: 600; d-inline-block; margin-top: auto; border: 1px solid rgba(30,77,58,0.1); }
+        
+        .affil-box { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin-top: 1rem; }
+        .affil-tag { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 6px; background: white; color: var(--text-body); box-shadow: var(--shadow-sm); transition: border-color 0.2s; cursor: default; }
+        .affil-tag:hover { border-color: var(--forest); color: var(--forest); }
+        
+        .seminar-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .seminar-item { background: white; border-left: 4px solid var(--forest); padding: 1.5rem 2rem; box-shadow: var(--shadow-sm); border-radius: 0 var(--radius) var(--radius) 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: transform 0.2s, background 0.2s; }
+        .seminar-item:hover { transform: translateX(5px); background: var(--forest-pale); }
+        .s-date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--forest); font-weight: 600; margin-bottom: 0.6rem; display: block; letter-spacing: 0.05em; text-transform: uppercase; }
+        .s-title { font-size: 1.15rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.4; }
+
+        .nav-icon { width: 1.1em; height: 1.1em; fill: currentColor; transform: translateY(2px); margin-right: 4px; }
+        .logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+    </style>
+</head>
+<body>
+    <div id="sec-overlay">
+        <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--fire)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <h2>Content Protected</h2><p>Session: <span id="sid-disp">—</span></p>
+    </div>
+    <div id="watermark"><canvas id="wm-canvas"></canvas></div>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="images/suk_logo.png" alt="SUK Logo" class="logo-img">
+                <div class="logo-text">
+                    <div class="uni">Shivaji University, Kolhapur · Est. 2021</div>
+                    <div class="institute">Centre for Climate Change &amp; Sustainability Studies</div>
+                </div>
+            </div>
+            <div style="font-family:'DM Mono', monospace; font-size:0.75rem; color:var(--text-muted);" id="hdr-date">—</div>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
+            </a>
+            <a href="institution.html" class="active">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> About CCCSS
+            </a>
+            <a href="projects.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Project Dashboards
+            </a>
+            <a href="map-viewer.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg> Interactive Map
+            </a>
+            <a href="research.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Research
+            </a>
+            <a href="data.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> Climate Data
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Mission Section -->
+        <section style="background: white; padding: 5rem 2rem; border-bottom: 1px solid var(--border);">
+            <div class="container" style="padding:0">
+                <div class="page-header">
+                    <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--forest); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">Institution Profile</div>
+                    <h2 class="page-title">Our Mission</h2>
+                    <div style="width:60px; height:3px; background:var(--forest); margin:0 auto 2rem;"></div>
+                    
+                    <div class="mission-text fi">
+                        <p style="margin-bottom: 1.5rem;">The Centre for Climate Change and Sustainability Studies, established at Shivaji University Kolhapur in October 2021, is a pioneering transdisciplinary hub. Comprising faculty members from diverse fields including Geography, Statistics, Environmental Science, Sociology, Physics, Computer Science, and other allied disciplines.</p>
+                        
+                        <p style="margin-bottom: 1.5rem;">The center aims to delve into climate variability, climate change, and their impacts on the local and regional environment. With a primary focus on the southwestern region of Maharashtra, the center is dedicated to enhancing awareness, advocating for action, and conducting comprehensive research on climate change and sustainability issues.</p>
+                        
+                        <p>Through a blend of research endeavors, discussions, prototype projects, and strategic interventions, the center endeavors to decipher the complexities of climate dynamics and their repercussions on the ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaborators / National Faculty Row -->
+        <section style="padding: 5rem 2rem; background: var(--surface);">
+            <div class="container">
+                <div style="text-align:center; margin-bottom: 4rem;">
+                    <h3 style="font-family:var(--font-display); font-size:2rem; color:var(--text-dark); margin-bottom:1rem;">Collaboration with National & International Faculty</h3>
+                    <p style="color:var(--text-muted); max-width: 700px; margin: 0 auto;">Our multi-disciplinary research model is strengthened by direct collaboration with leading scientists, hydrologists, and statisticians from premier institutes across the globe.</p>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Faculty 1 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Prof. (Dr.) Venkatesh Merwade</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Professor<br><span style="color:var(--text-light);font-size:0.8rem;">Purdue University, USA</span></div>
+                        <div class="t-spec">Hydrological Modeling, RS & GIS</div>
+                    </div>
+
+                    <!-- Faculty 2 -->
+                    <div class="team-card fi" style="transition-delay: 0.1s;">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Anil Kulkarni</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Distinguished Visiting Scientist<br><span style="color:var(--text-light);font-size:0.8rem;">IISc Bangalore</span></div>
+                        <div class="t-spec">Landslide Modeling</div>
+                    </div>
+
+                    <!-- Faculty 3 -->
+                    <div class="team-card fi" style="transition-delay: 0.2s;">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Bhaskar R. Nikam</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Scientist/Engineer SF<br><span style="color:var(--text-light);font-size:0.8rem;">Indian Institute of Remote Sensing, Dehradun</span></div>
+                        <div class="t-spec">Remote Sensing & GIS</div>
+                    </div>
+
+                    <!-- Faculty 4 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Ravindra Vitthal Kale</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Scientist-D<br><span style="color:var(--text-light);font-size:0.8rem;">National Institute of Hydrology, J&K</span></div>
+                        <div class="t-spec">Hydrological Modeling</div>
+                    </div>
+
+                    <!-- Faculty 5 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Somanath D. Pawar</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Assistant Professor<br><span style="color:var(--text-light);font-size:0.8rem;">Shivaji University</span></div>
+                        <div class="t-spec">Statistics Modeling</div>
+                    </div>
+
+                    <!-- Faculty 6 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. (Mrs.) Aasawari S. Jadhav</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Assistant Professor<br><span style="color:var(--text-light);font-size:0.8rem;">Shivaji University</span></div>
+                        <div class="t-spec">Environmental Studies</div>
+                    </div>
+
+                    <!-- Faculty 7 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Mr. Ashish A. Doshi</div>
+                        <div class="t-qual">B.E. (Civil)</div>
+                        <div class="t-role">Director<br><span style="color:var(--text-light);font-size:0.8rem;">Infraplan Engineering Pvt.Ltd. Kolhapur</span></div>
+                        <div class="t-spec">Physical Modeling of Hydraulic Structure</div>
+                    </div>
+
+                    <!-- Faculty 8 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Nikhil S. Navare</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Director<br><span style="color:var(--text-light);font-size:0.8rem;">Entelogix Pvt. Ltd. Kolhapur</span></div>
+                        <div class="t-spec">Industrial IoT Software Systems</div>
+                    </div>
+
+                    <!-- Faculty 9 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Tukaram D. Dongale</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Assistant Professor<br><span style="color:var(--text-light);font-size:0.8rem;">Shivaji University</span></div>
+                        <div class="t-spec">Electronic Materials, AI & ML</div>
+                    </div>
+
+                    <!-- Faculty 10 -->
+                    <div class="team-card fi">
+                        <div class="t-av"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <div class="t-name">Dr. Ganesh S. Nhivekar</div>
+                        <div class="t-qual">Ph.D</div>
+                        <div class="t-role">Assistant Professor<br><span style="color:var(--text-light);font-size:0.8rem;">Shivaji University</span></div>
+                        <div class="t-spec">Electronic Materials and Devices</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Seminars & Contact Layout -->
+        <section style="padding: 5rem 2rem; background: var(--cream);">
+            <div class="container" style="padding:0;">
+                <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start;">
+                    
+                    <!-- NEW Seminars Section -->
+                    <div class="fi">
+                        <h3 style="font-family:var(--font-display); font-size:1.8rem; color:var(--text-dark); margin-bottom:1rem;">Seminars & Expert Talks</h3>
+                        <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:2rem;">Key events, lectures, and capacity building programs conducted by CCCSS at Shivaji University.</p>
+                        
+                        <div class="seminar-list">
+                            <!-- Seminar 1 -->
+                            <div class="seminar-item">
+                                <span class="s-date">21 September – 12 October 2021</span>
+                                <div class="s-title">Lecture series on Climate Change: Mitigation, Adaptation and Sustainable Development.</div>
+                            </div>
+                            <!-- Seminar 2 -->
+                            <div class="seminar-item">
+                                <span class="s-date">28 February 2022</span>
+                                <div class="s-title">Invited talk on Role of Higher Education Institutes in Sustainable Development.</div>
+                            </div>
+                            <!-- Seminar 3 -->
+                            <div class="seminar-item">
+                                <span class="s-date">02 August 2022</span>
+                                <div class="s-title">Invited talk on Water Resources Management using Data, Computational Simulation and Cyber Infrastructure.</div>
+                            </div>
+                            <!-- Seminar 4 -->
+                            <div class="seminar-item">
+                                <span class="s-date">13 October 2022</span>
+                                <div class="s-title">Invited talk on Remote Sensing for Snow and Ice.</div>
+                            </div>
+                            <!-- Seminar 5 -->
+                            <div class="seminar-item">
+                                <span class="s-date">01 September 2023</span>
+                                <div class="s-title">Invited talk on Climate-Sensitive Sustainable Urban Heat Island Mitigation Studies.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact & Affiliations -->
+                    <div>
+                        <div class="contact-box fi">
+                            <h3 style="font-family:var(--font-display); font-size:1.4rem; color:var(--text-dark); margin-bottom:1.5rem;">Contact Information</h3>
+                            
+                            <div class="c-line">
+                                <svg class="c-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                <div><strong>Mailing Address</strong><br><span style="color:var(--text-muted);font-size:0.9rem;">Center for Climate Change and Sustainability Studies, Shivaji University Vidya Nagar, Kolhapur</span></div>
+                            </div>
+                            
+                            <div class="c-line">
+                                <svg class="c-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                <div><strong>Coordinator</strong><br><span style="color:var(--text-muted);font-size:0.9rem;">Prof. (Dr.) Sachin S. Panhalkar</span></div>
+                            </div>
+
+                            <div class="c-line">
+                                <svg class="c-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                <div><strong>Phone</strong><br><span style="color:var(--text-muted);font-size:0.9rem;">9011774456</span></div>
+                            </div>
+
+                            <div class="c-line">
+                                <svg class="c-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                <div><strong>Email</strong><br>
+                                    <a href="mailto:panhalkarsachin@gmail.com" style="font-size:0.9rem;">panhalkarsachin@gmail.com</a><br>
+                                    <a href="mailto:cccss@unishivaji.ac.in" style="font-size:0.9rem;">cccss@unishivaji.ac.in</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fi" style="margin-top: 3rem;">
+                            <h3 style="font-family:var(--font-display); font-size:1.4rem; color:var(--text-dark); margin-bottom:0.5rem;">Affiliations & Network</h3>
+                            <div style="width:40px; height:2px; background:var(--forest); margin-bottom:1.5rem;"></div>
+                            <div class="affil-box">
+                                <span class="affil-tag">Shivaji University</span>
+                                <span class="affil-tag">IITM Pune</span>
+                                <span class="affil-tag">IMD</span>
+                                <span class="affil-tag">ISRO / NRSC</span>
+                                <span class="affil-tag">IISc Bangalore</span>
+                                <span class="affil-tag">Purdue University</span>
+                                <span class="affil-tag">MoEFCC</span>
+                                <span class="affil-tag">UGC</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <img src="images/suk_logo.png" alt="SUK Logo" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border);">
+            <div class="footer-copy">
+                <strong>CCCSS · Shivaji University, Kolhapur</strong><br>
+                GIS Dashboard v2.0 · Est. October 2021<br>
+                © Centre for Climate Change &amp; Sustainability Studies. All IP rights reserved.
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="institution.html">Contact Us</a>
+            <a href="projects.html">Projects</a>
+            <a href="map-viewer.html">Map Explorer</a>
+        </div>
+    </footer>
+</body>
+</html>

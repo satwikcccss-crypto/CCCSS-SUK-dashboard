@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | CCCSS Kolhapur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/charts.js"></script>
+
+    <style>
+        .layout { display: grid; grid-template-columns: 1fr 350px; gap: 3rem; align-items: start; }
+        
+        .thrust-card { background: white; border-left: 4px solid var(--forest); border-radius: 4px; padding: 2.5rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem; }
+        .thrust-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--text-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+        .thrust-card p { font-size: 1rem; color: var(--text-body); line-height: 1.8; margin-bottom: 1rem; }
+        .thrust-icon { width: 28px; height: 28px; fill: currentColor; }
+        
+        .pub-list { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .pub-row { padding: 1.5rem; border-bottom: 1px solid var(--border-light); display: flex; gap: 1.5rem; transition: background 0.2s; }
+        .pub-row:hover { background: var(--forest-pale); }
+        .pub-row:last-child { border-bottom: none; }
+        .pub-year { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--forest); flex-shrink: 0; }
+        .pub-title { font-size: 1.05rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.4; }
+        .pub-authors { font-size: 0.85rem; color: var(--text-body); margin-bottom: 0.5rem; }
+        .pub-journal { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+
+        .side-widget { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; position: sticky; top: 100px; }
+        .sw-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-light); padding-bottom: 0.5rem; }
+        .ch-wrap { position: relative; height: 280px; width: 100%; }
+
+        @media(max-width: 900px){ .layout { grid-template-columns: 1fr; } .side-widget { position: static; } }
+        
+        .nav-icon { width: 1.1em; height: 1.1em; fill: currentColor; transform: translateY(2px); margin-right: 4px; }
+        .logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: white; border: 2px solid var(--border); box-shadow: var(--shadow-sm); }
+    </style>
+</head>
+<body>
+    <div id="sec-overlay">
+        <svg viewBox="0 0 24 24" width="60" height="60" fill="var(--fire)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <h2>Content Protected</h2><p>Session: <span id="sid-disp">—</span></p>
+    </div>
+    <div id="watermark"><canvas id="wm-canvas"></canvas></div>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="images/suk_logo.png" alt="SUK Logo" class="logo-img">
+                <div class="logo-text">
+                    <div class="uni">Shivaji University, Kolhapur · Est. 2021</div>
+                    <div class="institute">Centre for Climate Change &amp; Sustainability Studies</div>
+                </div>
+            </div>
+            <div style="font-family:'DM Mono', monospace; font-size:0.75rem; color:var(--text-muted);" id="hdr-date">—</div>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
+            </a>
+            <a href="institution.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> About CCCSS
+            </a>
+            <a href="projects.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Project Dashboards
+            </a>
+            <a href="map-viewer.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg> Interactive Map
+            </a>
+            <a href="research.html" class="active">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Research
+            </a>
+            <a href="data.html">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> Climate Data
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--forest); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">Academic Excellence</div>
+            <h2 class="page-title">Research & Publications</h2>
+            <div style="width:60px; height:3px; background:var(--forest); margin:0 auto 1.5rem;"></div>
+            <p class="page-subtitle">Exploring climate dynamics, geospatial hazards, and ecological shifts across Maharashtra through rigorous scientific inquiry.</p>
+        </div>
+
+        <div class="layout">
+            <div class="main-content">
+                
+                <h3 style="font-family:var(--font-display); font-size:1.8rem; color:var(--text-dark); margin-bottom:1.5rem;">Thrust Areas</h3>
+                
+                <div class="thrust-card" style="border-left-color: #2980b9;">
+                    <h3 style="color:#2980b9;"><svg class="thrust-icon" viewBox="0 0 24 24"><path d="M22 21L2 21v2h20v-2zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Real Time Flood Modeling</h3>
+                    <p>The number of flood incidents documented in previous years has significantly grown, impacting people's lives and resulting in long-term economic loss and environmental harm in impacted areas. In many regions of the world, floods are expected to become more frequent and severe due to climate change.</p>
+                    <p>Flooding has increased 4-fold and 2.5-fold in the tropics and northern mid-latitudes, respectively, according to a worldwide flood database based on in-situ measurement and satellite remote sensing from 1985 to 2015. (Najibi and Devineni, 2018). Flood-related disasters accounted for 44% of all disasters and 31% of all economic losses between 1970 and 2019. (WMO, 2021). This is even more important because various rivers are experiencing significant changes in flow as a result of global climate change. The establishment of a river flood monitoring system is especially important because of the increased frequency and severity of flooding brought on by climate change.</p>
+                    <p>However, there were very few studies of forecasting the events in real-time or informing stakeholders in the relevant impacted areas while evaluating extreme flooding events that could help to find out the factors that produced those disasters. These observations suggest that systematic research is required to predict and simulate flood scenarios to prevent losses. Despite numerous flood assessment studies, there is still ample scope for an extensive multidisciplinary study in this area.</p>
+                    <p>The proposed research aims to develop real time system that can be beneficial for flood monitoring and prediction. This system could strengthen disaster management planning and reduce potential consequences at both the local and national levels.</p>
+                </div>
+
+                <div class="thrust-card" style="border-left-color: #8B4513;">
+                    <h3 style="color:#8B4513;"><svg class="thrust-icon" viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg> Landslide Susceptibility Mapping</h3>
+                    <p>A landslide is a natural hazard that is caused by several geophysical and anthropogenic factors. Every year, the Western Ghats of Maharashtra suffer from landslides that are dangerous, occur rapidly, and cause significant damage. Over the last few years, landslide susceptibility assessment has been considered a significant and beneficial approach to predicting the probability of the spatial distribution of landslide occurrence under certain geo-environmental circumstances. Thus, it is valuable to do a landslide susceptibility assessment for landslide disaster risk reduction. Through research, landslide susceptibility mapping will be done using historical landslides and different thematic geo-environmental datasets. In the future, landslide susceptibility mapping will be helpful in identifying areas for the preventive measures and mitigation of present and future landslides for developers and decision-makers.</p>
+                </div>
+
+                <div class="thrust-card" style="border-left-color: #b8860b;">
+                    <h3 style="color:#b8860b;"><svg class="thrust-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg> Assessment & Forecasting of Drought Conditions</h3>
+                    <p>Due to climate change worldwide, the frequency and severity of extreme weather events such as drought are suddenly increasing, which has devastating effects on the fragile environment and human society. In the present investigation, to assess meteorological and agricultural drought conditions in Maharashtra state, India, will be done using various meteorological drought indices like standard precipitation index (SPI), evapotranspiration index (SPEI), rainfall anomaly index (RAI), and agricultural drought assessment will be done using satellite-based drought indices such as the Normalized Difference Vegetation Index (NDVI), Normalized Difference Water Index (NDWI), and Vegetation Condition Index (VCI). The severity, frequency, and intensity of meteorological drought conditions will be assessed for the period 1901 to 2020. For this research, we will use non-parametric statistical techniques like the Mann-Kendall test and Sen’s method for innovative trend analysis to detect long-term trends, the Pettit test, Standard Normal Homogeneity Test (SNHT), and the Buishand Range test to detect change points. We will apply Artificial Neural Networks for the future forecasting of drought conditions.</p>
+                </div>
+
+                <div class="thrust-card" style="border-left-color: var(--forest);">
+                    <h3 style="color:var(--forest);"><svg class="thrust-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg> Climate Change Scenario</h3>
+                    <p>The examination of the spatiotemporal distribution and changing pattern of rainfall & temperature at any place is a basic and essential prerequisite for the management and planning of water resources, sustainable agricultural growth, and other sectors. As a result, utilizing 120 years of long-term rainfall data and seventy years of temperature data the rainfall and temperature pattern has been analysed. The current study will focus on variability and trend analysis of yearly rainfall in different ways, including overall rainfall data statistics for seventy-four meteorological substations on an annual and seasonal basis. The current study examines all aspects of rainfall variability and trend for overall and change point wise annual and seasonal rainfall change rate in the study area.</p>
+                </div>
+
+                <br>
+                <h3 style="font-family:var(--font-display); font-size:1.8rem; color:var(--text-dark); margin-bottom:1.5rem;">Selected Publications</h3>
+
+                <div class="pub-list">
+                    <div class="pub-row">
+                        <div class="pub-year">2023</div>
+                        <div>
+                            <div class="pub-title">Rainfall Induced Landslide Susceptibility Mapping using Random Forest and Artificial Neural Network in Western Ghats, India</div>
+                            <div class="pub-authors">Joshi, A., Panhalkar, S., & Pawar, N.J.</div>
+                            <div class="pub-journal">Journal of Mountain Science | DOI: 10.1007/s11629-022-7561-3</div>
+                        </div>
+                    </div>
+                    <div class="pub-row">
+                        <div class="pub-year">2023</div>
+                        <div>
+                            <div class="pub-title">Spatiotemporal Assessment of Agricultural Drought in Semi-Arid region of Maharashtra using Vegetation Health Index via Google Earth Engine</div>
+                            <div class="pub-authors">Patil, P., Nikam, B.R., & Shirke, D.T.</div>
+                            <div class="pub-journal">Environmental Monitoring and Assessment | DOI: 10.1007/s10661-023-11234-5</div>
+                        </div>
+                    </div>
+                    <div class="pub-row">
+                        <div class="pub-year">2022</div>
+                        <div>
+                            <div class="pub-title">Assessment of Land Use / Land Cover changes and its impact on Land Surface Temperature in Kolhapur City, India</div>
+                            <div class="pub-authors">Mali, S., Panhalkar, S., & Raut, P.D.</div>
+                            <div class="pub-journal">Urban Climate | DOI: 10.1016/j.uclim.2022.101254</div>
+                        </div>
+                    </div>
+                    <div class="pub-row">
+                        <div class="pub-year">2022</div>
+                        <div>
+                            <div class="pub-title">Forest Fire Risk Zonation in Sahyadri Tiger Reserve using Geospatial Techniques</div>
+                            <div class="pub-authors">Bhosale, N., & Panhalkar, S.</div>
+                            <div class="pub-journal">Geocarto International | DOI: 10.1080/10106049.2022.2036123</div>
+                        </div>
+                    </div>
+                    <div class="pub-row">
+                        <div class="pub-year">2021</div>
+                        <div>
+                            <div class="pub-title">Flood Hazard and Vulnerability Assessment of Panchganga River Basin, Maharashtra, using Analytical Hierarchy Process (AHP)</div>
+                            <div class="pub-authors">Desai, M., Panhalkar, S., & Merwade, V.</div>
+                            <div class="pub-journal">Natural Hazards | DOI: 10.1007/s11069-021-04875-y</div>
+                        </div>
+                    </div>
+                    <div class="pub-row">
+                        <div class="pub-year">2021</div>
+                        <div>
+                            <div class="pub-title">Trends and variability in temperature and precipitation over the Indian Summer Monsoon region: A case study of Maharashtra</div>
+                            <div class="pub-authors">Kulkarni, A., & Shirke, D.T.</div>
+                            <div class="pub-journal">Theoretical and Applied Climatology | DOI: 10.1007/s00704-021-03658-2</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="side-widget">
+                <h4 class="sw-title">Research Output Profile</h4>
+                <div class="ch-wrap"><canvas id="ch-pubs"></canvas></div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2rem; text-align:center; line-height:1.6;">
+                    Thematic distribution of peer-reviewed articles authored by CCCSS faculty since establishment.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <img src="images/suk_logo.png" alt="SUK Logo" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border);">
+            <div class="footer-copy">
+                <strong>CCCSS · Shivaji University, Kolhapur</strong><br>
+                GIS Dashboard v2.0 · Est. October 2021<br>
+                © Centre for Climate Change &amp; Sustainability Studies. All IP rights reserved.
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="institution.html">Contact Us</a>
+            <a href="projects.html">Projects</a>
+            <a href="map-viewer.html">Map Explorer</a>
+        </div>
+    </footer>
+</body>
+</html>
