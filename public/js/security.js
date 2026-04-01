@@ -119,14 +119,14 @@ function drawWM() {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.save();
-  ctx.globalAlpha = 0.055;
-  ctx.font = '12px DM Mono, monospace';
+  ctx.globalAlpha = 0.15;
+  ctx.font = '16px DM Mono, monospace';
   ctx.fillStyle = '#1e4d3a';
   ctx.translate(canvas.width/2, canvas.height/2);
   ctx.rotate(-0.32);
   const msg = `© CCCSS — Shivaji University, Kolhapur  ·  ${SID}  ·  All Rights Reserved`;
-  for (let y=-canvas.height; y<canvas.height; y+=90)
-    for (let x=-canvas.width; x<canvas.width; x+=420)
+  for (let y=-canvas.height; y<canvas.height; y+=120)
+    for (let x=-canvas.width; x<canvas.width; x+=600)
       ctx.fillText(msg, x, y);
   ctx.restore();
   document.getElementById('watermark').classList.add('on');
