@@ -101,16 +101,32 @@ function drawWM() {
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
+  
+  // 1. Draw Geometric Grid Pattern (Extremely Subtle)
   ctx.save();
-  ctx.globalAlpha = 0.28; // Further increased visibility
-  ctx.font = '700 20px DM Sans, sans-serif'; // Larger, bolder font
+  ctx.strokeStyle = '#1e4d3a';
+  ctx.globalAlpha = 0.03; // Almost invisible grid
+  ctx.lineWidth = 1;
+  const step = 80;
+  for (let x=0; x<canvas.width; x+=step) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+  }
+  for (let y=0; y<canvas.height; y+=step) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+  }
+  ctx.restore();
+
+  // 2. Draw Text Watermark (Clean and Professional)
+  ctx.save();
+  ctx.globalAlpha = 0.08; // Reduced opacity for transparency
+  ctx.font = '700 18px DM Sans, sans-serif'; 
   ctx.fillStyle = '#1e4d3a';
   ctx.translate(canvas.width/2, canvas.height/2);
   ctx.rotate(-0.25);
-  const msg = `Centre for Climate Change and Sustainability Studies CCCSS Shivaji University  ·  ${SID}`;
-  // Denser tiling
-  for (let y=-canvas.height; y<canvas.height; y+=110)
-    for (let x=-canvas.width; x<canvas.width; x+=650)
+  const msg = `CCCSS, SHIVAJI UNIVERSITY  ·  ${SID}`;
+  // Sparsely tiled for better visibility of background content
+  for (let y=-canvas.height; y<canvas.height; y+=180)
+    for (let x=-canvas.width; x<canvas.width; x+=800)
       ctx.fillText(msg, x, y);
   ctx.restore();
   document.getElementById('watermark').classList.add('on');
