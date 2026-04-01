@@ -71,22 +71,13 @@ document.addEventListener('keyup', e => {
   }
 }, true);
 
-// Removed intrusive blur/focus/visibility listeners that were causing UX issues
- document.addEventListener('copy', e => {
-   e.clipboardData.setData('text/plain', '[CCCSS Kolhapur — Content Protected — ' + SID + ']');
-   e.preventDefault();
- });
-
+// Optimized copy protection
 document.addEventListener('copy', e => {
   e.clipboardData.setData('text/plain', '[CCCSS Kolhapur — Content Protected — ' + SID + ']');
   e.preventDefault();
 });
 
-setInterval(() => {
-  if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
-    document.body.innerHTML = `<div style="position:fixed;inset:0;background:#faf9f6;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;gap:1rem"><div style="font-size:3rem">🔒</div><div style="font-size:1.5rem;font-weight:bold;color:#c0392b">Session Terminated</div><p>DevTools detected · Session ${SID}</p></div>`;
-  }
-}, 1800);
+// Removed intrusive DevTools width/height check to prevent UX breaks on scroll/mobile
 
 function blurScreen(reason) {
   document.body.classList.add('blurred');
@@ -103,7 +94,7 @@ try { Object.defineProperty(window, 'print', { value: () => { blurScreen('Print 
 
 /* ─────────────────────────────────────
    GLOBAL WATERMARK
-───────────────────────────────────── */
+   ───────────────────────────────────── */
 function drawWM() {
   const canvas = document.getElementById('wm-canvas');
   if (!canvas) return;
@@ -111,14 +102,15 @@ function drawWM() {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.save();
-  ctx.globalAlpha = 0.22; // Increased visibility
-  ctx.font = '700 18px DM Sans, sans-serif'; // Bolder font
+  ctx.globalAlpha = 0.28; // Further increased visibility
+  ctx.font = '700 20px DM Sans, sans-serif'; // Larger, bolder font
   ctx.fillStyle = '#1e4d3a';
   ctx.translate(canvas.width/2, canvas.height/2);
   ctx.rotate(-0.25);
   const msg = `Centre for Climate Change and Sustainability Studies CCCSS Shivaji University  ·  ${SID}`;
-  for (let y=-canvas.height; y<canvas.height; y+=140)
-    for (let x=-canvas.width; x<canvas.width; x+=750)
+  // Denser tiling
+  for (let y=-canvas.height; y<canvas.height; y+=110)
+    for (let x=-canvas.width; x<canvas.width; x+=650)
       ctx.fillText(msg, x, y);
   ctx.restore();
   document.getElementById('watermark').classList.add('on');
