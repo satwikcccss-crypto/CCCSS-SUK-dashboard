@@ -71,19 +71,11 @@ document.addEventListener('keyup', e => {
   }
 }, true);
 
-let bTimer;
-window.addEventListener('blur', () => {
-  bTimer = setTimeout(() => blurScreen('Window focus lost (possible screen capture)'), 250);
-});
-window.addEventListener('focus', () => {
-  clearTimeout(bTimer);
-  try { navigator.clipboard.writeText('[CCCSS Protected — Session: ' + SID + ']'); } catch(_){}
-});
-
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) blurScreen('Tab hidden');
-  else setTimeout(unBlur, 2200);
-});
+// Removed intrusive blur/focus/visibility listeners that were causing UX issues
+ document.addEventListener('copy', e => {
+   e.clipboardData.setData('text/plain', '[CCCSS Kolhapur — Content Protected — ' + SID + ']');
+   e.preventDefault();
+ });
 
 document.addEventListener('copy', e => {
   e.clipboardData.setData('text/plain', '[CCCSS Kolhapur — Content Protected — ' + SID + ']');
@@ -119,14 +111,14 @@ function drawWM() {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.save();
-  ctx.globalAlpha = 0.15;
-  ctx.font = '16px DM Mono, monospace';
+  ctx.globalAlpha = 0.22; // Increased visibility
+  ctx.font = '700 18px DM Sans, sans-serif'; // Bolder font
   ctx.fillStyle = '#1e4d3a';
   ctx.translate(canvas.width/2, canvas.height/2);
-  ctx.rotate(-0.32);
-  const msg = `© CCCSS — Shivaji University, Kolhapur  ·  ${SID}  ·  All Rights Reserved`;
-  for (let y=-canvas.height; y<canvas.height; y+=120)
-    for (let x=-canvas.width; x<canvas.width; x+=600)
+  ctx.rotate(-0.25);
+  const msg = `Centre for Climate Change and Sustainability Studies CCCSS Shivaji University  ·  ${SID}`;
+  for (let y=-canvas.height; y<canvas.height; y+=140)
+    for (let x=-canvas.width; x<canvas.width; x+=750)
       ctx.fillText(msg, x, y);
   ctx.restore();
   document.getElementById('watermark').classList.add('on');
