@@ -73,12 +73,13 @@ app.use(helmet({
         "https://mt1.google.com",
         "https://mt2.google.com",
         "https://mt3.google.com",
-        "https://services.arcgisonline.com"
+        "https://services.arcgisonline.com",
+        "https://api.thingspeak.com"
       ],
       workerSrc: ["'self'", "blob:"],
-      childSrc: ["'none'"],
-      frameSrc: ["'none'"],
-      frameAncestors: ["'none'"],
+      childSrc: ["'self'"],
+      frameSrc: ["'self'", "https://satwikcccss-crypto.github.io"],
+      frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       formAction: ["'self'"]
@@ -87,7 +88,7 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,   // needed for external tiles
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   referrerPolicy: { policy: 'no-referrer' },
-  xFrameOptions: { action: 'deny' },
+  xFrameOptions: { action: 'sameorigin' },
   hsts: { maxAge: 31536000, includeSubDomains: true }
 }));
 

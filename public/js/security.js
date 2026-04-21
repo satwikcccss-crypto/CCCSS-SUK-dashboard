@@ -60,14 +60,14 @@ document.addEventListener('keydown', e => {
   if (e.key === 'F12') { e.preventDefault(); return; }
   if (ctrl && e.shiftKey && ['i','j','c'].includes(k)) { e.preventDefault(); return; }
   if (['PrintScreen','Print'].includes(e.key) || e.code === 'PrintScreen') {
-    e.preventDefault(); blurScreen('PrintScreen key');
+    e.preventDefault(); terminateSession('PrintScreen key');
   }
 }, true);
 
 document.addEventListener('keyup', e => {
   if (['PrintScreen','Print'].includes(e.key) || e.code === 'PrintScreen') {
     try { navigator.clipboard.writeText(''); } catch(_){}
-    blurScreen('PrintScreen key');
+    terminateSession('PrintScreen key');
   }
 }, true);
 
@@ -85,12 +85,31 @@ function blurScreen(reason) {
 }
 function unBlur() { document.body.classList.remove('blurred'); }
 
+function terminateSession(reason) {
+  if (typeof secObserver !== 'undefined') secObserver.disconnect();
+  document.body.innerHTML = `
+    <div style="position:fixed;inset:0;z-index:999999;background:#faf9f6;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;text-align:center;padding:2rem;">
+      <svg viewBox="0 0 24 24" width="80" height="80" fill="#c0392b"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2.5rem;color:#c0392b;">Session Terminated</h2>
+      <p style="font-family:'DM Sans',sans-serif;color:#1a1a1a;font-size:1.2rem;max-width:600px;line-height:1.6;">
+        A prohibited action <strong>(${reason})</strong> was detected. For data protection and intellectual property enforcement, your current viewing session has been permanently locked.
+      </p>
+      <p style="font-family:'DM Mono',monospace;font-size:0.85rem;color:#7a7268;background:#eae7df;padding:10px 15px;border-radius:6px;border:1px solid #ddd9d0;">
+        Incident Logged ID: ${SID}
+      </p>
+      <button onclick="location.reload()" style="background:#1e4d3a;color:white;border:none;padding:12px 24px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-weight:600;margin-top:10px;box-shadow:0 4px 12px rgba(30,77,58,0.15);">
+        RELOAD SECURE SESSION
+      </button>
+    </div>
+  `;
+}
+
 window.addEventListener('beforeprint', () => {
   document.body.style.visibility = 'hidden';
   document.body.innerHTML = '';
 });
 window.addEventListener('afterprint', () => location.reload());
-try { Object.defineProperty(window, 'print', { value: () => { blurScreen('Print blocked'); }, writable: false }); } catch(_) {}
+try { Object.defineProperty(window, 'print', { value: () => { terminateSession('Print command executed'); }, writable: false }); } catch(_) {}
 
 /* ─────────────────────────────────────
    GLOBAL WATERMARK
