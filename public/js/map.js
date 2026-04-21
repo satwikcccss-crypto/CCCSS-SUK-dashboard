@@ -44,8 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     style: styles.satellite,
     center: [75.7, 19.0], // Centered roughly on Maharashtra
     zoom: 5.5,
+    maxBounds: [ [40.0, -10.0], [150.0, 60.0] ], // Restricted entirely to Asia coverage
     maxZoom: 18,
-    minZoom: 4
+    minZoom: 3
   });
 
   // ADD Navigation and Fullscreen Controls
@@ -86,18 +87,48 @@ document.addEventListener('DOMContentLoaded', () => {
       'filter': ['==', 'ST_NM', 'Maharashtra'] // Only show Maharashtra
     });
 
-    // Example of registering an ISRO Bhuvan style WMS layer structure
-    // (Actual endpoints require token or specific proxies, so we setup the source framework)
-    map.addSource('bhuvan-lulc', {
+    // Live Telemetry 1: NASA GIBS WMS (Active Fires / Thermal Anomalies)
+    map.addSource('nasa-fires', {
         'type': 'raster',
         'tiles': [
-            'https://bhuvan-vec1.nrsc.gov.in/bhuvan/wms?service=WMS&version=1.1.1&request=GetMap&layers=LULC:LULC50K_1516&styles=&bbox={bbox-epsg-3857}&width=256&height=256&srs=EPSG:3857&format=image/png&transparent=true'
+            'https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&LAYERS=VIIRS_SNPP_Thermal_Anomalies_375m_All&VERSION=1.3.0&FORMAT=image/png&TRANSPARENT=true&WIDTH=256&HEIGHT=256&CRS=EPSG:3857&BBOX={bbox-epsg-3857}'
         ],
         'tileSize': 256
     });
+    map.addLayer({
+        'id': 'fires-layer',
+        'type': 'raster',
+        'source': 'nasa-fires',
+        'paint': { 'raster-opacity': 0.9 },
+        'layout': { 'visibility': 'none' }
+    });
 
-    // Mock layer data source setup
-    setupMockLayers();
+    // Live Telemetry 2: RainViewer Global Radar
+    fetch('https://api.rainviewer.com/public/weather-maps.json')
+      .then(res => res.json())
+      .then(data => {
+        const host = data.host;
+        const past = data.radar.past;
+        if(past && past.length > 0) {
+            const latest = past[past.length - 1]; // Grab the latest available radar frame
+            // Construct mapping path using color scheme 2 (Snow/Rain color separation)
+            const tileUrl = `${host}${latest.path}/256/{z}/{x}/{y}/2/1_1.png`;
+            
+            map.addSource('rainviewer', {
+                'type': 'raster',
+                'tiles': [tileUrl],
+                'tileSize': 256
+            });
+            map.addLayer({
+                'id': 'radar-layer',
+                'type': 'raster',
+                'source': 'rainviewer',
+                'paint': { 'raster-opacity': 0.7 },
+                'layout': { 'visibility': 'none' }
+            });
+        }
+      })
+      .catch(err => console.error("RainViewer load error:", err));
 
     // Default active layer
     toggleLayerVisibility('districts', true);
@@ -118,13 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
         this.classList.add('active');
         toggleLayerVisibility(layerId, true);
         
-        // Show Bhuvan LULC conditionally if landslide is clicked (for demonstration of open data)
-        if(layerId === 'landslide') {
-             if (!map.getLayer('bhuvan-layer')) {
-                 map.addLayer({ 'id': 'bhuvan-layer', 'type': 'raster', 'source': 'bhuvan-lulc', 'paint': {'raster-opacity': 0.5} });
-             } else {
-                 map.setLayoutProperty('bhuvan-layer', 'visibility', 'visible');
-             }
+        // Try to update UI data panel based on layer selection
+        if(layerId === 'radar') {
+            document.getElementById('data-panel').innerHTML = `
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--river); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.1em; border-bottom:1px solid rgba(41,128,185,0.2); padding-bottom:0.5rem;">TELEMETRY LINK ACTIVE</div>
+                <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--text-dark); margin-bottom:0.5rem;">Live Weather Radar</h3>
+                <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5;">Streaming global precipitation intensity directly from RainViewer's satellite telemetry matrix.</p>
+            `;
+        } else if (layerId === 'fires') {
+            document.getElementById('data-panel').innerHTML = `
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--fire); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.1em; border-bottom:1px solid rgba(192,57,43,0.2); padding-bottom:0.5rem;">TELEMETRY LINK ACTIVE</div>
+                <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--text-dark); margin-bottom:0.5rem;">NASA VIIRS Anomalies</h3>
+                <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5;">Tracking active fires, hotspots, and thermal anomalies via Earthdata Global Imagery Browse Services.</p>
+            `;
         }
       }
     });
@@ -168,13 +205,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function toggleLayerVisibility(id, show) {
-  // A simplified router to handle mock layers vs geojson layers
   const vis = show ? 'visible' : 'none';
   if (id === 'districts') {
     if (map.getLayer('districts-fill')) map.setLayoutProperty('districts-fill', 'visibility', vis);
     if (map.getLayer('districts-line')) map.setLayoutProperty('districts-line', 'visibility', vis);
-  } else if (id === 'landslide' && !show) {
-      if (map.getLayer('bhuvan-layer')) map.setLayoutProperty('bhuvan-layer', 'visibility', 'none');
+  } else if (id === 'radar') {
+    if (map.getLayer('radar-layer')) map.setLayoutProperty('radar-layer', 'visibility', vis);
+  } else if (id === 'fires') {
+    if (map.getLayer('fires-layer')) map.setLayoutProperty('fires-layer', 'visibility', vis);
   }
 }
 
@@ -200,8 +238,4 @@ function updateDataPanel(name, rain, temp) {
   `;
 }
 
-function setupMockLayers() {
-  // Setup empty mock sources for toggle functionality if needed without full data loads
-  map.addSource('mock-rain', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-  map.addLayer({ id: 'mock-rain-layer', type: 'circle', source: 'mock-rain', paint: {} });
-}
+// Mock layers method fully retired in favor of Live Integrations
